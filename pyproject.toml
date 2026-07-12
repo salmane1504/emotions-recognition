@@ -1,7 +1,7 @@
 [project]
-name = "goemotions"
+name = "emotions-recognition"
 version = "0.1.0"
-description = "Add your description here"
+description = "Fun NPL project for the weekend"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

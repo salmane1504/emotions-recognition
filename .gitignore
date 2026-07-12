@@ -8,4 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
-dataset
+
+# Datasets
+datasets/
+
+# Models
+models/
+artifacts/
