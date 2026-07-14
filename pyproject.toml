@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "datasets>=5.0.0",
+    "fastapi>=0.115.0",
     "ipython>=9.15.0",
     "matplotlib>=3.11.0",
     "numpy>=2.5.1",
@@ -15,5 +16,6 @@ dependencies = [
     "torch>=2.13.0",
     "tqdm>=4.68.4",
     "transformers>=5.13.1",
+    "uvicorn>=0.30.0",
     "wordcloud>=1.9.6",
 ]
