@@ -9,3 +9,5 @@ scikit-learn
 transformers
 tqdm
 datasets
+fastapi
+uvicorn
