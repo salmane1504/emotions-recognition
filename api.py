@@ -5,12 +5,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from transformers import AutoTokenizer
 
-from main import LABELS, load_model, predict, DEFAULT_THRESHOLD, MODEL_DIR
+from main import LABELS, load_model, predict_top_k, MODEL_DIR
+
+TOP_K = 5
 
 
 class PredictRequest(BaseModel):
     texts: list[str] = Field(..., min_length=1, max_length=64, description="List of texts to classify")
-    threshold: float = Field(default=DEFAULT_THRESHOLD, ge=0.0, le=1.0, description="Probability threshold")
 
 
 class PredictResponse(BaseModel):
@@ -48,12 +49,12 @@ app = FastAPI(
 
 @app.post("/predict", response_model=PredictResponse)
 async def predict_emotions(request: PredictRequest):
-    results = predict(
+    results = predict_top_k(
         models["model"],
         models["tokenizer"],
         request.texts,
         models["device"],
-        request.threshold,
+        k=TOP_K,
     )
     return PredictResponse(predictions=results)
 
