@@ -60,6 +60,29 @@ def predict(model, tokenizer, texts: list[str], device: torch.device, threshold:
     return results
 
 
+def predict_top_k(model, tokenizer, texts: list[str], device: torch.device, k: int = 5):
+    encodings = tokenizer(
+        texts,
+        truncation=True,
+        max_length=MAX_LENGTH,
+        padding=True,
+        return_tensors="pt",
+    )
+    encodings = {k_: v.to(device) for k_, v in encodings.items()}
+
+    with torch.no_grad(), torch.amp.autocast(device.type):
+        logits = model(**encodings).logits
+
+    probs = torch.sigmoid(logits.float()).cpu().numpy()
+    results = []
+    for row in probs:
+        indexed = [(LABELS[i], float(row[i])) for i in range(len(LABELS))]
+        indexed.sort(key=lambda x: x[1], reverse=True)
+        top = {label: score for label, score in indexed[:k]}
+        results.append(top)
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser(description="GoEmotions inference with fine-tuned RoBERTa")
     parser.add_argument("texts", nargs="*", help="Text(s) to classify. Omit for interactive mode.")
