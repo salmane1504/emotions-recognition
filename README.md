@@ -8,6 +8,39 @@ Multi-label emotion classification using a fine-tuned RoBERTa model on the [GoEm
 pip install -r requirements.txt
 ```
 
+## Training The Model
+
+Training is done in the notebook `notebooks/train_model.ipynb`.
+
+The notebook expects:
+- Dataset at `datasets/go_emotions_dataset.csv`
+- Local RoBERTa files in `models/`
+
+### Base RoBERTa Weights (Downloaded Manually)
+
+The base RoBERTa model was downloaded manually from Hugging Face and stored in `models/`.
+This directory contains the model/tokenizer files used by the training notebook (for example: `config.json`, tokenizer files, and `roberta-base.safetensors`).
+
+By default, the notebook uses:
+- `ROBERTA_MODEL_PATH=../models/roberta-base.safetensors`
+- `ROBERTA_TOKENIZER_PATH` resolved from the same `models/` directory
+
+### Run Training
+
+1. Open `notebooks/train_model.ipynb`.
+2. Run all cells from top to bottom.
+3. The notebook will:
+  - Load and split the GoEmotions dataset
+  - Tokenize text with RoBERTa
+  - Fine-tune a multi-label classifier
+  - Save the best checkpoint based on validation micro-F1
+
+### Trained Model Location
+
+The best trained checkpoint is saved to:
+
+`artifacts/roberta-goemotions/best_model.pt`
+
 ## CLI Usage
 
 ```bash
