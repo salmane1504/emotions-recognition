@@ -7,7 +7,7 @@ from transformers import AutoTokenizer
 
 from main import LABELS, load_model, predict_top_k, MODEL_DIR
 
-TOP_K = 5
+TOP_K = 3
 
 
 class PredictRequest(BaseModel):
